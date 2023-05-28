@@ -109,7 +109,7 @@ public class Main {
                     break;
                 case 2:
                     int tipoHelado = Integer.parseInt(JOptionPane.showInputDialog(almacen.mostrarHelados()));
-                    int cantidad = Integer.parseInt(JOptionPane.showInputDialog("Ingrese la cantidad de helados que desea:"));
+                    cantidad = Integer.parseInt(JOptionPane.showInputDialog("Ingrese la cantidad de helados que desea:"));
                     cliente.realizarPedido(almacen, tipoHelado, cantidad);
                     break;
                 case 3:
