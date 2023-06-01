@@ -51,10 +51,10 @@ public class Almacen{
     }
 
     public String mostrarHelados(){
-        String cantidad = " ";
+        String cantidad = "";
         try{
             for (int i = 0; i < cantidadHelados.size(); i++){
-                cantidad = cantidad + i + ": " + cantidadHelados.get(i).get(1).toString()+ " cantidad:" + cantidadHelados.get(i).size() + "\n";
+                cantidad = cantidad + i + ": " + cantidadHelados.get(i).get(1).toString()+ ", cantidad:" + cantidadHelados.get(i).size() + "\n";
             }
         }catch(Exception e){
 
@@ -62,14 +62,14 @@ public class Almacen{
         return cantidad;
     }
 
-    public String mostrarProductosIndice(){
+    /*public String mostrarProductosIndice(){
         String cantidad = "";
         for (int i = 0; i < cantidadHelados.size(); i++){
             //String d = "";
             cantidad = i + ": " + cantidad + cantidadHelados.get(i).get(1).toString()+"\n";
         }
         return cantidad;
-    }
+    }*/
 
     public void mostrarkgHelados(){
         for (int i = 0; i < cantidadHelados.size(); i++){

@@ -1,6 +1,8 @@
 import javax.swing.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Objects;
+
 /*
 Una heladería desea abrir un nuevo punto de venta a través de Internet. Para ello, necesita desarrollar un sistema que le permita automatizar el proceso de pedido y delivery. Cuando un cliente ingrese a la página del sitio de la heladería deberá:
 • Poder consultar los sabores de helado disponibles (con stock) y su composición.
@@ -19,7 +21,7 @@ public class Main {
         almacen.anadirProducto( 5,10, "Vainilla", 1, "Queso");
         RegistoPersonas registoPersonas = new RegistoPersonas();
         registoPersonas.registrarGerente("Pepe", LocalDateTime.now(), "pepeadmin@gmail.com", 999999999, "Avenida velasco astete", 12, 20);
-        registoPersonas.registrarClientes("Pepe", LocalDateTime.now(), "pepecliente@gmail.com", 999999999, "Avenida velasco astete");
+        registoPersonas.registrarClientes("Pepe", LocalDateTime.now(), "c", 999999999, "Avenida velasco astete");
 
         registoPersonas.getGerentes();
         String menuLoginRegistro = "Seleccione una opcion: \n" +
@@ -37,39 +39,37 @@ public class Main {
         while (opcionLogin != 9){
             opcionLogin = Integer.parseInt(JOptionPane.showInputDialog(menuLoginRegistro));
             switch (opcionLogin) {
-                case 1:
+                case 1 -> {
                     email = JOptionPane.showInputDialog("Ingrese su correo");
                     Cliente cliente = registoPersonas.buscarClientes(email);
-                    if (cliente == null){
+                    if (cliente == null) {
                         System.out.println("ingreso incorrecto o cliente no encontrado\n" +
                                 " Registrese por favor ");
                         for (int i = 0; i < registoPersonas.getGerentes().size(); i++) {
                             System.out.println(i);
                             System.out.println(registoPersonas.getGerentes().get(i).getEmail());
                             System.out.println(email);
-                            if (registoPersonas.getGerentes().get(i).getEmail().equals(email)){
+                            if (registoPersonas.getGerentes().get(i).getEmail().equals(email)) {
                                 menuGerenteLogueado(registoPersonas.getGerentes().get(i));
                             }
                         }
-                    }
-                    else {
+                    } else {
                         menuClienteLogueado(cliente);
                     }
-                    break;
-                case 2:
+                }
+                case 2 -> {
                     // Registro cliente
                     nombre = JOptionPane.showInputDialog("Ingrese su nombre");
                     fechaNacimiento = escribirFecha();
                     telefono = Integer.parseInt(JOptionPane.showInputDialog("Ingrese su teléfono"));
                     domicilio = JOptionPane.showInputDialog("Ingrese su domicilio");
                     email = JOptionPane.showInputDialog("Ingrese su correo");
-                    registoPersonas.registrarClientes(nombre,fechaNacimiento,email,telefono,domicilio);
+                    registoPersonas.registrarClientes(nombre, fechaNacimiento, email, telefono, domicilio);
                     System.out.println(registoPersonas.getClientes().get(0).getNombre().toString());
-                    break;
-                case 9:
+                }
+                case 9 ->
                     // Salir del programa
-                    System.exit(0);
-                    break;
+                        System.exit(0);
             }
         }
     }
@@ -91,13 +91,20 @@ public class Main {
                     JOptionPane.showMessageDialog(null, almacen.mostrarHelados());
                     break;
                 case 2:
-                    if (almacen.mostrarHelados() == " "){
-                        JOptionPane.showMessageDialog(null, almacen.mostrarHelados());
-                    }else{
-                        tipoHelado = Integer.parseInt(JOptionPane.showInputDialog(almacen.mostrarHelados()));
-                        cantidad = Integer.parseInt(JOptionPane.showInputDialog("Ingrese la cantidad de helados que desea:"));
+                    int response = 0;
+                    while(cantidad != 9){
+                        if (Objects.equals(almacen.mostrarHelados(), "")){
+                            JOptionPane.showMessageDialog(null, almacen.mostrarHelados());
+                        }else{
+                            tipoHelado = Integer.parseInt(JOptionPane.showInputDialog(almacen.mostrarHelados() + "\n9 Para finalizar"));
+                            cantidad = Integer.parseInt(JOptionPane.showInputDialog("Ingrese la cantidad de helados que desea:"));
+                            response = JOptionPane.showConfirmDialog(null, "Desea proceder a pagar?", null, JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
+                            if(response == JOptionPane.YES_OPTION){
+                                cliente.realizarPedido(almacen, tipoHelado, cantidad);
+                                break;
+                            }
+                        }
                     }
-                    cliente.realizarPedido(almacen, tipoHelado, cantidad);
                     break;
                 case 3://vea si se encuentra en tienda o en repartidor
                     break;
@@ -140,7 +147,7 @@ public class Main {
                     almacen.actualizarStock(indice, cantidad);
                     break;
                 case 3:
-                    indice = Integer.parseInt(JOptionPane.showInputDialog("Escoja un producto a eliminar" + "\n"+almacen.mostrarProductosIndice()));
+                    indice = Integer.parseInt(JOptionPane.showInputDialog("Escoja un producto a eliminar" + "\n"+almacen.mostrarHelados()));
                     almacen.eliminarProducto(indice);
                     break;
             }
