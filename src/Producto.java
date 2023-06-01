@@ -1,6 +1,6 @@
 public class Producto {
     private int precio;
-    private int codigoProducto;
+    protected int codigoProducto;
 
     public int getPrecio() {
         return precio;
