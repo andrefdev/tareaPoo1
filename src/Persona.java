@@ -54,4 +54,7 @@ public class Persona {
         this.telefono = telefono;
         this.domicilio = domicilio;
     }
+    public Persona(){
+
+    }
 }

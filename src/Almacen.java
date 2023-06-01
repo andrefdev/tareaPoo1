@@ -3,10 +3,16 @@ import java.util.*;
 import java.time.LocalDateTime;
 import java.util.Iterator;
 import java.util.Enumeration;
+import java.util.Hashtable;
 
 public class Almacen{
     private int indice = 0;
     private HashMap<Integer, List> cantidadHelados = new HashMap<>();
+
+    public HashMap<Integer, List> getCantidadHelados() {
+        return cantidadHelados;
+    }
+
     public Almacen(){
     }
 
@@ -76,13 +82,23 @@ public class Almacen{
             System.out.println(cantidadHelados.get(i).get(1).toString()+ " cantidad: " + cantidadHelados.get(i).size());
         }
     }
-    public void gestionarPedido(Cliente cliente, int indice, int cantidad){
+    public void gestionarPedido(Cliente cliente, Hashtable hash){
         int pedidosRealizados = 0;
-        for (int i = 0; i < cantidad; i++){
-            pedidosRealizados++;
-            cantidadHelados.get(indice).remove(i);
+
+        Enumeration<Integer> enumKeys = hash.keys();
+        Enumeration<Integer> enumValue = hash.elements();
+        String productos = "";
+        while(enumKeys.hasMoreElements()) {
+            int indice = enumKeys.nextElement();
+            int cantidad = enumValue.nextElement();
+            productos = productos + ": " + cantidadHelados.get(indice).get(0).toString()+ ", cantidad:" + cantidad + "\n";
+            for (int i = 0; i < cantidad; i++){
+                pedidosRealizados++;
+                cantidadHelados.get(indice).remove(i);
+            }
         }
-        System.out.println(pedidosRealizados);
-        Pedido pedido = new Pedido(cliente, LocalDateTime.now());
+
+        System.out.println(productos);
+        Pedido pedido = new Pedido(cliente, LocalDateTime.now(), productos);
     }
 }

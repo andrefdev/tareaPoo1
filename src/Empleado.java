@@ -12,7 +12,5 @@ public class Empleado extends Persona{
     public void asignarRepartidor(int dni){
 
     }
-    public void organizarPedido(int codigoProducto){
 
-    }
 }

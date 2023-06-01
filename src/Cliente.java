@@ -1,4 +1,7 @@
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Random;
+import java.util.Hashtable;
 
 public class Cliente extends Persona {
     public Cliente(String nombre, LocalDateTime fechaNacimiento, String email, int telefono, String domicilio) {
@@ -8,7 +11,8 @@ public class Cliente extends Persona {
         repartidor.subirEstadodepedido(codigo);
 
     }
-    public void realizarPedido(Almacen almacen, int indice, int canitdad){
-        almacen.gestionarPedido(this, indice, canitdad);
+    public void realizarPedido(Almacen almacen, Hashtable hash){
+        almacen.gestionarPedido(this, hash);
+        Random id = new Random();
     }
 }

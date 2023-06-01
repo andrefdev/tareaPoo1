@@ -1,12 +1,9 @@
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
 
-public class RegistoPersonas {
-
-
+public class RegistoPersonas extends Persona {
     private List<Cliente> clientes = new ArrayList<>();
     private List<Empleado> empleados = new ArrayList<>();
     private List<Repartidor> repartidores = new ArrayList<>();
@@ -49,5 +46,9 @@ public class RegistoPersonas {
     public void registrarGerente(String nombre, LocalDateTime fechaNacimiento, String email, int telefono, String domicilio, int ruc, int sueldo) {
         Gerente gerente = new Gerente(nombre, fechaNacimiento, email, telefono, domicilio, ruc, sueldo);
         gerentes.add(gerente);
+    }
+    public void registrarRepartidor(String nombre, String domicilio) {
+        Repartidor repartidor = new Repartidor(nombre, domicilio);
+        repartidores.add(repartidor);
     }
 }

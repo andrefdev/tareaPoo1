@@ -1,7 +1,10 @@
 import javax.swing.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Objects;
+import java.util.Hashtable;
 
 /*
 Una heladería desea abrir un nuevo punto de venta a través de Internet. Para ello, necesita desarrollar un sistema que le permita automatizar el proceso de pedido y delivery. Cuando un cliente ingrese a la página del sitio de la heladería deberá:
@@ -19,10 +22,12 @@ public class Main {
     static Almacen almacen = new Almacen();
     public static void main(String[] args) {
         almacen.anadirProducto( 5,10, "Vainilla", 1, "Queso");
+        almacen.anadirProducto( 5,10, "fresa", 2, "Queso");
+
         RegistoPersonas registoPersonas = new RegistoPersonas();
         registoPersonas.registrarGerente("Pepe", LocalDateTime.now(), "pepeadmin@gmail.com", 999999999, "Avenida velasco astete", 12, 20);
         registoPersonas.registrarClientes("Pepe", LocalDateTime.now(), "c", 999999999, "Avenida velasco astete");
-
+        registoPersonas.registrarRepartidor("PepeRepartidor", "SJM");
         registoPersonas.getGerentes();
         String menuLoginRegistro = "Seleccione una opcion: \n" +
                 "1. Login \n" +
@@ -84,6 +89,7 @@ public class Main {
         int opcion = 0;
         int tipoHelado = 0;
         int cantidad = 0;
+        Hashtable<Integer, Integer> valores = new Hashtable();
         while (opcion != 9){
             opcion = Integer.parseInt(JOptionPane.showInputDialog(menu));
             switch (opcion) {
@@ -98,15 +104,20 @@ public class Main {
                         }else{
                             tipoHelado = Integer.parseInt(JOptionPane.showInputDialog(almacen.mostrarHelados() + "\n9 Para finalizar"));
                             cantidad = Integer.parseInt(JOptionPane.showInputDialog("Ingrese la cantidad de helados que desea:"));
+                            // almacenar esos datos en una coleccion temporal
+                            valores.put(tipoHelado, cantidad);
+                            //HashMap<Integer, List> cantidadHelados = almacen.getCantidadHelados();
                             response = JOptionPane.showConfirmDialog(null, "Desea proceder a pagar?", null, JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
                             if(response == JOptionPane.YES_OPTION){
-                                cliente.realizarPedido(almacen, tipoHelado, cantidad);
+                                cliente.realizarPedido(almacen, valores);
                                 break;
                             }
                         }
                     }
                     break;
                 case 3://vea si se encuentra en tienda o en repartidor
+
+
                     break;
             }
         }
