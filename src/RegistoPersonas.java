@@ -46,4 +46,8 @@ public class RegistoPersonas {
         }
         return c;
     }
+    public void registrarGerente(String nombre, LocalDateTime fechaNacimiento, String email, int telefono, String domicilio, int ruc, int sueldo) {
+        Gerente gerente = new Gerente(nombre, fechaNacimiento, email, telefono, domicilio, ruc, sueldo);
+        gerentes.add(gerente);
+    }
 }
