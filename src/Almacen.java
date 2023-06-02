@@ -43,13 +43,24 @@ public class Almacen{
         cantidadHelados.remove(indice);
     }
 
-    public void actualizarStock(int indice, int cantidad) {
+    public void elimninarCantidadStock(int indice, int cantidad) {
         try{
             System.out.println(cantidadHelados.get(indice).size()-1);
             int cant = cantidadHelados.get(indice).size()-cantidad;
             for (int i = cantidadHelados.get(indice).size()-1; i > cant-1; i--) {
                 System.out.println(i);
                 cantidadHelados.get(indice).remove(i);
+            }
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+    }
+    public void actualizarStock(int indice, int cantidad){
+        try{
+            Helado heladito = (Helado) cantidadHelados.get(indice).get(0);
+            cantidadHelados.get(indice).clear();
+            for (int i = 0; i < cantidad; i++) {
+                cantidadHelados.get(indice).add(heladito);
             }
         }catch (Exception e){
             System.out.println(e.getMessage());
@@ -67,22 +78,12 @@ public class Almacen{
         }
         return cantidad;
     }
-
-    /*public String mostrarProductosIndice(){
-        String cantidad = "";
-        for (int i = 0; i < cantidadHelados.size(); i++){
-            //String d = "";
-            cantidad = i + ": " + cantidad + cantidadHelados.get(i).get(1).toString()+"\n";
-        }
-        return cantidad;
-    }*/
-
     public void mostrarkgHelados(){
         for (int i = 0; i < cantidadHelados.size(); i++){
             System.out.println(cantidadHelados.get(i).get(1).toString()+ " cantidad: " + cantidadHelados.get(i).size());
         }
     }
-    public void gestionarPedido(Cliente cliente, Hashtable hash){
+    public Pedido gestionarPedido(Cliente cliente, Hashtable hash){
         int pedidosRealizados = 0;
 
         Enumeration<Integer> enumKeys = hash.keys();
@@ -97,8 +98,8 @@ public class Almacen{
                 cantidadHelados.get(indice).remove(i);
             }
         }
-
         System.out.println(productos);
-        Pedido pedido = new Pedido(cliente, LocalDateTime.now(), productos);
+        Pedido pedido = new Pedido(cliente, productos);
+        return pedido;
     }
 }

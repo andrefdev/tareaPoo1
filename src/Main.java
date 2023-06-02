@@ -18,18 +18,22 @@ El gerente necesita que el sistema le permita obtener la cantidad de pedidos y l
 Los datos que se guardan del repartidor son: número de repartidor, nombre y domicilio.
  */
 public class Main {
-
     static Almacen almacen = new Almacen();
+    static Heladeria heladeria = new Heladeria(222222, "La fontana 323");
+    static RegistoPersonas registoPersonas = new RegistoPersonas();
+    static Gerente ger = new Gerente("Gerente", LocalDateTime.now(), "g", 9999999, "casa", 123, 1000, 1);
+    static Empleado emp = new Empleado("Empleado", LocalDateTime.now(), "e", 9999999, "casa", 123, 1000, 1);
+    static Cliente cli = new Cliente("Empleado", LocalDateTime.now(), "c", 9999999, "casa", 123);
+    static Repartidor rep = new Repartidor(1234, "Casa");
     public static void main(String[] args) {
-        almacen.anadirProducto( 5,10, "Vainilla", 1, "Queso");
-        almacen.anadirProducto( 5,10, "fresa", 2, "Queso");
+        heladeria.contratarEmpleado(emp);
+        emp.agregarGerente(ger);
+        emp.agregarRepartidor(rep);
+        almacen.anadirProducto(12,12, "fresa", 22,"fresa");
+        heladeria.agregarCliente(cli);
 
-        RegistoPersonas registoPersonas = new RegistoPersonas();
-        registoPersonas.registrarGerente("Pepe", LocalDateTime.now(), "pepeadmin@gmail.com", 999999999, "Avenida velasco astete", 12, 20);
-        registoPersonas.registrarClientes("Pepe", LocalDateTime.now(), "c", 999999999, "Avenida velasco astete");
-        registoPersonas.registrarRepartidor("PepeRepartidor", "SJM");
-        registoPersonas.getGerentes();
-        String menuLoginRegistro = "Seleccione una opcion: \n" +
+        String menuLoginRegistro = "     MENU\n" +
+                "Seleccione una opcion: \n" +
                 "1. Login \n" +
                 "2. Registrarse \n" +
                 "9. Salir";
@@ -39,6 +43,7 @@ public class Main {
         String email = null;
         int telefono = 0;
         String domicilio = null;
+        int dni;
 
         int opcionLogin = 0;
         while (opcionLogin != 9){
@@ -46,20 +51,19 @@ public class Main {
             switch (opcionLogin) {
                 case 1 -> {
                     email = JOptionPane.showInputDialog("Ingrese su correo");
-                    Cliente cliente = registoPersonas.buscarClientes(email);
-                    if (cliente == null) {
+                    Cliente cliente = heladeria.buscarClientes(email);
+                    Gerente gerente = emp.buscarGerentes(email);
+                    if (cliente != null) {
+                        menuClienteLogueado(cliente);
+                    } else {
                         System.out.println("ingreso incorrecto o cliente no encontrado\n" +
                                 " Registrese por favor ");
-                        for (int i = 0; i < registoPersonas.getGerentes().size(); i++) {
-                            System.out.println(i);
-                            System.out.println(registoPersonas.getGerentes().get(i).getEmail());
-                            System.out.println(email);
-                            if (registoPersonas.getGerentes().get(i).getEmail().equals(email)) {
-                                menuGerenteLogueado(registoPersonas.getGerentes().get(i));
-                            }
-                        }
+                    }
+                    if (gerente != null) {
+                        menuGerenteLogueado(gerente);
                     } else {
-                        menuClienteLogueado(cliente);
+                        System.out.println("ingreso incorrecto o gerente no encontrado\n" +
+                                " Registrese por favor ");
                     }
                 }
                 case 2 -> {
@@ -69,8 +73,9 @@ public class Main {
                     telefono = Integer.parseInt(JOptionPane.showInputDialog("Ingrese su teléfono"));
                     domicilio = JOptionPane.showInputDialog("Ingrese su domicilio");
                     email = JOptionPane.showInputDialog("Ingrese su correo");
-                    registoPersonas.registrarClientes(nombre, fechaNacimiento, email, telefono, domicilio);
-                    System.out.println(registoPersonas.getClientes().get(0).getNombre().toString());
+                    dni = Integer.parseInt(JOptionPane.showInputDialog("Ingrese su dni"));
+                    Cliente c = new Cliente(nombre, fechaNacimiento, email,telefono, domicilio, dni);
+                    heladeria.agregarCliente(c);
                 }
                 case 9 ->
                     // Salir del programa
@@ -106,18 +111,17 @@ public class Main {
                             cantidad = Integer.parseInt(JOptionPane.showInputDialog("Ingrese la cantidad de helados que desea:"));
                             // almacenar esos datos en una coleccion temporal
                             valores.put(tipoHelado, cantidad);
-                            //HashMap<Integer, List> cantidadHelados = almacen.getCantidadHelados();
                             response = JOptionPane.showConfirmDialog(null, "Desea proceder a pagar?", null, JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
                             if(response == JOptionPane.YES_OPTION){
-                                cliente.realizarPedido(almacen, valores);
+                                JOptionPane.showMessageDialog(null,cliente.realizarPedido(almacen, valores));
+                                emp.asignarPedido(1234, cliente.getPedido());
                                 break;
                             }
                         }
                     }
                     break;
-                case 3://vea si se encuentra en tienda o en repartidor
-
-
+                case 3:
+                    emp.getRepartidores().get(1234).getPedido();
                     break;
             }
         }
@@ -164,8 +168,6 @@ public class Main {
             }
         }
     }
-
-
 
     public static LocalDateTime escribirFecha(){
         LocalDateTime fechaNacimiento = null;

@@ -8,12 +8,21 @@ public class Pedido {
     private LocalDateTime horaPedido;
     private String productos;
     private int codigo;
-    public Pedido(Cliente cliente, LocalDateTime horaPedido, String productos){
+    public Pedido(Cliente cliente, String productos){
         Random ran = new Random();
         this.codigo = ran.nextInt(9999)+1000;
         this.cliente = cliente;
-        this.horaPedido = horaPedido;
+        this.horaPedido = LocalDateTime.now();
         this.productos = productos;
     }
 
+    @Override
+    public String toString() {
+        return "Pedido{" +
+                "cliente=" + cliente +
+                ", horaPedido=" + horaPedido +
+                ", productos='" + productos + '\'' +
+                ", codigo=" + codigo +
+                '}';
+    }
 }

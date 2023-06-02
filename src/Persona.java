@@ -7,6 +7,8 @@ public class Persona {
     public int telefono;
     public String domicilio;
 
+    private int dni;
+
     public String getNombre() {
         return nombre;
     }
@@ -47,14 +49,36 @@ public class Persona {
         this.domicilio = domicilio;
     }
 
-    public Persona(String nombre, LocalDateTime fechaNacimiento, String email, int telefono, String domicilio) {
+    public Persona(String nombre, LocalDateTime fechaNacimiento, String email, int telefono, String domicilio, int dni) {
         this.nombre = nombre;
         this.fechaNacimiento = fechaNacimiento;
         this.email = email;
         this.telefono = telefono;
         this.domicilio = domicilio;
+        this.dni = dni;
     }
+
+    public int getDni() {
+        return dni;
+    }
+
+    public void setDni(int dni) {
+        this.dni = dni;
+    }
+
     public Persona(){
 
+    }
+
+    @Override
+    public String toString() {
+        return "Persona{" +
+                "nombre='" + nombre + '\'' +
+                ", fechaNacimiento=" + fechaNacimiento +
+                ", email='" + email + '\'' +
+                ", telefono=" + telefono +
+                ", domicilio='" + domicilio + '\'' +
+                ", dni=" + dni +
+                '}';
     }
 }

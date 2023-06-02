@@ -1,54 +1,26 @@
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
-public class RegistoPersonas extends Persona {
-    private List<Cliente> clientes = new ArrayList<>();
-    private List<Empleado> empleados = new ArrayList<>();
-    private List<Repartidor> repartidores = new ArrayList<>();
-    private List<Gerente> gerentes = new ArrayList<>();
+public class RegistoPersonas {
 
-    public List<Cliente> getClientes() {
-        return clientes;
+    Hashtable<Integer, Persona> personas = new Hashtable<Integer, Persona>();
+
+    public Persona buscarPersona(int dni){
+        return personas.get(dni);
     }
 
-    public List<Empleado> getEmpleados() {
-        return empleados;
+    public void registrarPersona(Persona persona){
+        personas.put(persona.getDni(), persona);
     }
 
-    public List<Repartidor> getRepartidores() {
-        return repartidores;
-    }
-
-    public List<Gerente> getGerentes() {
-        return gerentes;
-    }
-
-    public void registrarClientes(String nombre, LocalDateTime fechaNacimiento, String email, int telefono, String domicilio){
-        Cliente cliente = new Cliente(nombre, fechaNacimiento, email, telefono, domicilio);
-        clientes.add(cliente);
-    }
-    /*public Repartidor buscarRepartidores(int codigo){
-        return
-    }*/
-    public Cliente buscarClientes(String email){
-        Iterator<Cliente> iteradorClientes = clientes.iterator();
-        Cliente c = null;
-        while (iteradorClientes.hasNext()) {
-            Cliente cliente = iteradorClientes.next();
-            if (cliente.getEmail().equals(email)){
-                return cliente;
-            }
+    public String obtenerDatosDePersonas(){
+        Persona p;
+        String dx="";
+        Enumeration<Persona> enu = personas.elements();
+        while(enu.hasMoreElements()){
+            p=enu.nextElement();
+            dx=dx+p.toString()+"\n";
         }
-        return c;
-    }
-    public void registrarGerente(String nombre, LocalDateTime fechaNacimiento, String email, int telefono, String domicilio, int ruc, int sueldo) {
-        Gerente gerente = new Gerente(nombre, fechaNacimiento, email, telefono, domicilio, ruc, sueldo);
-        gerentes.add(gerente);
-    }
-    public void registrarRepartidor(String nombre, String domicilio) {
-        Repartidor repartidor = new Repartidor(nombre, domicilio);
-        repartidores.add(repartidor);
+        return dx;
     }
 }
