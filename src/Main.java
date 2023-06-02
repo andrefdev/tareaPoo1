@@ -24,11 +24,13 @@ public class Main {
     static Gerente ger = new Gerente("Gerente", LocalDateTime.now(), "g", 9999999, "casa", 123, 1000, 1);
     static Empleado emp = new Empleado("Empleado", LocalDateTime.now(), "e", 9999999, "casa", 123, 1000, 1);
     static Cliente cli = new Cliente("Empleado", LocalDateTime.now(), "c", 9999999, "casa", 123);
-    static Repartidor rep = new Repartidor(1234, "Casa");
+    static Repartidor rep = new Repartidor(1234, "Casa", "Juan pablo");
+    static Repartidor rep1 = new Repartidor(4321, "Cas", "pepe lucho");
     public static void main(String[] args) {
         heladeria.contratarEmpleado(emp);
         emp.agregarGerente(ger);
         emp.agregarRepartidor(rep);
+        emp.agregarRepartidor(rep1);
         almacen.anadirProducto(12,12, "fresa", 22,"fresa");
         heladeria.agregarCliente(cli);
 
@@ -114,14 +116,23 @@ public class Main {
                             response = JOptionPane.showConfirmDialog(null, "Desea proceder a pagar?", null, JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
                             if(response == JOptionPane.YES_OPTION){
                                 JOptionPane.showMessageDialog(null,cliente.realizarPedido(almacen, valores));
-                                emp.asignarPedido(1234, cliente.getPedido());
+                                emp.asignarPedido(cliente.getPedido());
                                 break;
                             }
                         }
                     }
                     break;
                 case 3:
-                    emp.getRepartidores().get(1234).getPedido();
+                    emp.buscarRepartidores(4321).getPedido();
+                    JOptionPane.showMessageDialog(null, "El repartidor: "+ emp.buscarRepartidores(4321).toString() + " Está llevando el pedido");
+                    cliente.verEstadoPedido(rep1, 4321);
+                    try {
+                        Thread.sleep(5000);
+                    }
+                    catch (InterruptedException e){
+                        e.printStackTrace();
+                    }
+                    rep1.realizarEntrega();
                     break;
             }
         }

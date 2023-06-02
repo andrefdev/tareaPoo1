@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -41,8 +42,13 @@ public class Repartidor extends Empleado {
 
     }
 
-
-
-
+    @Override
+    public String toString() {
+        return "Repartidor{" +
+                "codigo=" + codigo +
+                ", nombre='" + nombre + '\'' +
+                ", pedido=" + pedido +
+                '}';
+    }
 
 }
