@@ -73,6 +73,7 @@ public class Repartidor extends Empleado implements Runnable{
 
         // Registro la hora de llegada
         horaLlegada = new Date();
+        pedido = null;
 
         // Imprimir el pedido entregado y la hora de llegada
         System.out.println("Pedido entregado: " + getPedido() + "\n" + "Por el repartidor de codigo: " + getCodigo());
